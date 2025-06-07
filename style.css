@@ -1,10 +1,13 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap");
-
-body {
+html {
   background: linear-gradient(to left, #00c6ff, #0072ff);
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
   color: azure;
   font-family: "Poppins", sans-serif;
+}
+body {
+  max-width: 360px;
+  margin: auto;
 }
 
 div {
