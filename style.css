@@ -1,0 +1,145 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap");
+
+body {
+  background: linear-gradient(to left, #00c6ff, #0072ff);
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  color: azure;
+  font-family: "Poppins", sans-serif;
+}
+
+div {
+  text-align: center;
+}
+
+p {
+  padding-top: 5px;
+}
+
+button {
+  background: linear-gradient(
+    to right,
+    #6a11cb,
+    #2575fc
+  ); /* Gradiente roxo-azul */
+  border: none;
+  color: white;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.3s;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+input {
+  display: block;
+  margin: 15px auto;
+  width: 90%;
+  height: 35px;
+  border: none;
+  border-radius: 4px;
+}
+
+.roleta-container {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  margin: 0 auto;
+}
+
+canvas {
+  border-radius: 50%;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+  display: block;
+  margin: 0 auto;
+}
+
+.ponteiro {
+  position: absolute;
+  top: 53%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+  border-bottom: 30px solid red;
+  transform: translate(-50%, -100%);
+  z-index: 10;
+  filter: drop-shadow(0 0 2px black);
+}
+
+#botao-girar {
+  padding: 10px 25px;
+  font-size: 18px;
+  background: linear-gradient(to right, #6a11cb, #2575fc);
+  border: none;
+  border-radius: 30px;
+  color: white;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.3s;
+}
+
+#botao-girar:hover {
+  background: linear-gradient(to right, #2575fc, #6a11cb);
+}
+
+#result {
+  display: none;
+  text-align: center;
+  font-size: 1.5em;
+  color: white;
+}
+
+#wrongAnswer {
+  color: red;
+  border: 1px solid black;
+  padding: 5px;
+  border-radius: 5px;
+  background-color: white;
+  display: none;
+}
+
+#roletaDiv {
+  display: block;
+  opacity: 0;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+#questions {
+  width: 90%;
+  margin: auto;
+  font-size: 1em;
+  display: block;
+}
+
+#gifInternet,
+#gifInternet2 {
+  opacity: 0;
+  margin: 30px auto;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  width: 300px;
+  max-width: 90%;
+  border-radius: 8px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.3);
+}
+
+#julgando {
+  font-size: 2em;
+  display: none;
+}
+
+#seguir {
+  display: none;
+  margin: auto;
+}

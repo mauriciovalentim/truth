@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Truth</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="questions">
+      <p>Qual a data de aniversário do seu filho?</p>
+      <input id="five" type="date" />
+      <p>
+        Quantos dias faz desde que você brincou com seu filho pela última vez?
+      </p>
+      <input id="one" type="number" />
+      <p>Quantos dias faz desde que você abraçou seu filho pela última vez?</p>
+      <input id="two" type="number" />
+      <p>Quantos dias faz que você beijou seu filho?</p>
+      <input id="three" type="number" />
+      <p>Você já deixou de comer para seu filho comer?</p>
+      <input id="four" />
+
+      <button id="sendAnswer" onclick="somar()">Confirmar</button>
+      <p id="wrongAnswer">Responsa todas as perguntas</p>
+    </div>
+    <div id="scales">
+      <p id="julgando">Julgando<br />.</p>
+      <img
+        src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExenVhMXltMWRmNW11dGY4YWc3MXNuOTJwcnk2dXhwMjl3cmtzZzI4dyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/bj72eotf7XSqDQVRxg/giphy.gif"
+        alt="GIF engraçado"
+        id="gifInternet"
+      />
+      <img
+        src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExNXpiNjd6MnpqZ3ZuYmdteXZyb3liNzQ0Y2wwYXN6cWxvZ2toY2o3dyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/jqHjE1Fde2N5wF9SXq/giphy.gif"
+        alt="GIF engraçado"
+        id="gifInternet2"
+      />
+      <button id="seguir" onclick="seguir()">Seguir</button>
+    </div>
+
+    <div id="roletaDiv">
+      <div class="roleta-container">
+        <canvas id="roleta" width="300" height="300"></canvas>
+        <div class="ponteiro"></div>
+      </div>
+      <p id="result">Você ganhou o premio</p>
+      <button id="botao-girar" style="margin-top: 20px">Girar Roleta</button>
+    </div>
+
+    <script>
+      function somar() {
+        let one = document.getElementById("one").value.trim() !== "";
+        let two = document.getElementById("two").value.trim() !== "";
+        let three = document.getElementById("three").value.trim() !== "";
+        let four = document.getElementById("four").value.trim() !== "";
+        let five = document.getElementById("five").value.trim() !== "";
+        console.log(one);
+        if (one && two && three && four && five) {
+          document.getElementById("one").value = "";
+          document.getElementById("two").value = "";
+          document.getElementById("three").value = "";
+          document.getElementById("four").value = "";
+          document.getElementById("five").value = "";
+
+          document.getElementById("questions").style.display = "none";
+          document.getElementById("gifInternet").style.opacity = "1";
+          // document.getElementById("roletaDiv").style.display = "block";
+          document.getElementById("julgando").style.display = "block";
+          // Executa algo a cada segundo
+
+          let pontoContador = 1;
+          const julgando = document.getElementById("julgando");
+
+          const intervalo = setInterval(() => {
+            // Cria a string com o número de pontos
+            let pontos = ".".repeat(pontoContador);
+            julgando.innerHTML = "Julgando<br>" + pontos;
+
+            pontoContador++;
+            if (pontoContador > 3) {
+              pontoContador = 1; // reinicia com 1 ponto
+            }
+          }, 500);
+
+          // Executa algo após 7 segundos
+          setTimeout(() => {
+            clearInterval(intervalo); // Para o intervalo se quiser
+            document.getElementById("julgando").innerHTML = "";
+            document.getElementById("gifInternet").style.display = "none";
+
+            document.getElementById("julgando").style.fontSize = "1.5em";
+
+            let message = "WOW!<br>Parece que você é uma mãe do caralho!";
+            let messageParts = message.match(/<[^>]+>|[^<]/g);
+            let cont = 0;
+
+            const intervalo2 = setInterval(() => {
+              if (cont < messageParts.length) {
+                document.getElementById("julgando").innerHTML +=
+                  messageParts[cont];
+                cont++;
+              } else {
+                document.getElementById("gifInternet2").style.opacity = "1";
+                document.getElementById("seguir").style.display = "block";
+                clearInterval(intervalo2);
+              }
+            }, 75);
+          }, 10000);
+        } else {
+          document.getElementById("wrongAnswer").style.display = "block";
+        }
+      }
+
+      function seguir() {
+        document.getElementById("gifInternet2").style.display = "none";
+        document.getElementById("seguir").style.display = "none";
+        document.getElementById("julgando").style.fontSize = "2em";
+        document.getElementById("julgando").innerHTML = "";
+
+        let message = "Parabéns!<br>Gire a roleta";
+        let messageParts = message.match(/<[^>]+>|[^<]/g);
+        let cont = 0;
+
+        const intervalo2 = setInterval(() => {
+          if (cont < messageParts.length) {
+            document.getElementById("julgando").innerHTML += messageParts[cont];
+            cont++;
+          } else {
+            document.getElementById("roletaDiv").style.opacity = "1";
+            clearInterval(intervalo2);
+          }
+        }, 75);
+      }
+    </script>
+
+    <script>
+      // Código da roleta
+
+      const canvas = document.getElementById("roleta");
+      const ctx = canvas.getContext("2d");
+      const tamanho = canvas.width;
+      const raio = tamanho / 2;
+
+      const segmentos = ["", "", "", "", "", "", "", ""];
+
+      const cores = [
+        "#FF6384",
+        "#36A2EB",
+        "#FFCE56",
+        "#4BC0C0",
+        "#9966FF",
+        "#FF9F40",
+        "#E7E9ED",
+        "#71B37C",
+      ];
+
+      let anguloAtual = 0;
+      let anguloDestino = 0;
+      let girando = false;
+
+      function desenharRoleta() {
+        const tamanhoFonte = 14;
+        ctx.clearRect(0, 0, tamanho, tamanho);
+        ctx.save();
+        ctx.translate(raio, raio);
+        ctx.rotate(anguloAtual);
+
+        const anguloSegmento = (2 * Math.PI) / segmentos.length;
+
+        for (let i = 0; i < segmentos.length; i++) {
+          ctx.fillStyle = cores[i % cores.length];
+          ctx.beginPath();
+          ctx.moveTo(0, 0);
+          ctx.arc(0, 0, raio, i * anguloSegmento, (i + 1) * anguloSegmento);
+          ctx.lineTo(0, 0);
+          ctx.fill();
+
+          ctx.fillStyle = "black";
+          ctx.font = `${tamanhoFonte}px Arial`;
+          ctx.textAlign = "right";
+          ctx.textBaseline = "middle";
+          ctx.save();
+          ctx.rotate(i * anguloSegmento + anguloSegmento / 2);
+          ctx.translate(raio - 10, 0);
+          ctx.rotate(Math.PI / 2);
+          ctx.fillText(segmentos[i], 0, 0);
+          ctx.restore();
+        }
+
+        ctx.restore();
+      }
+
+      desenharRoleta();
+
+      function girar() {
+        if (girando) return;
+        girando = true;
+
+        const premioIndex = Math.floor(Math.random() * segmentos.length);
+
+        const anguloSegmento = 360 / segmentos.length;
+        const giroCompleto = 360 * 5;
+        anguloDestino =
+          giroCompleto +
+          (360 - premioIndex * anguloSegmento) -
+          anguloSegmento / 2;
+
+        const duracao = 4000;
+        const inicio = performance.now();
+
+        function animar(time) {
+          const tempoDecorrido = time - inicio;
+          if (tempoDecorrido < duracao) {
+            const progresso = tempoDecorrido / duracao;
+            const easeOut = 1 - Math.pow(1 - progresso, 3);
+            anguloAtual = (anguloDestino * easeOut * Math.PI) / 180;
+            desenharRoleta();
+            requestAnimationFrame(animar);
+          } else {
+            anguloAtual = (anguloDestino * Math.PI) / 180;
+            desenharRoleta();
+            girando = false;
+
+            document.getElementById("botao-girar").style.display = "none";
+            document.getElementById("result").style.display = "block";
+            let number = Math.floor(Math.random() * (8 - 1 + 1)) + 1;
+            let message = `Você tirou o prêmio ${number}`;
+            let cont = 0;
+            document.getElementById("result").innerHTML = ""; // limpa antes
+
+            const intervalo = setInterval(() => {
+              if (cont < message.length) {
+                document.getElementById("result").innerHTML += message[cont];
+                cont++;
+              } else {
+                clearInterval(intervalo); // para quando termina
+              }
+            }, 50);
+          }
+        }
+
+        requestAnimationFrame(animar);
+      }
+
+      document.getElementById("botao-girar").addEventListener("click", girar);
+    </script>
+  </body>
+</html>
